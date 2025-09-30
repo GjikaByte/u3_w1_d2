@@ -1,5 +1,5 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
-// import books from 'fantasy.json'; // <-- cambia file se vuoi (es: history.json)
+import books from 'fantasy.json'; // <-- cambia file se vuoi (es: history.json)
 
 export default function AllTheBooks() {
   return (
