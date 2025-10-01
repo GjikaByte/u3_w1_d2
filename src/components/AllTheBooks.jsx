@@ -1,6 +1,7 @@
 // src/components/AllTheBooks.jsx
 import { useState } from 'react'
-import { Row, Col, Card, ButtonGroup, Button } from 'react-bootstrap'
+import { Row, Col, ButtonGroup, Button } from 'react-bootstrap'
+import SingleBook from './SingleBook.jsx'
 
 // Load all JSON files in src/data at build time (Vite feature)
 const files = import.meta.glob('../data/*.json', { eager: true })
@@ -19,7 +20,7 @@ const DEFAULT = DATASETS.fantasy ? 'fantasy' : AVAILABLE[0] // prefer fantasy if
 const AllTheBooks = () => {
   const [active, setActive] = useState(DEFAULT)
 
-  if (!active) {
+  if (!AVAILABLE.length) {
     return <p className="text-muted">No book datasets found in <code>src/data</code>.</p>
   }
 
@@ -42,12 +43,7 @@ const AllTheBooks = () => {
       <Row className="g-2">
         {books.map((book) => (
           <Col xs={12} md={4} key={book.asin}>
-            <Card className="book-cover d-flex flex-column">
-              <Card.Img variant="top" src={book.img} alt={book.title} />
-              <Card.Body>
-                <Card.Title>{book.title}</Card.Title>
-              </Card.Body>
-            </Card>
+            <SingleBook book={book} />
           </Col>
         ))}
       </Row>
