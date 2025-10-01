@@ -1,30 +1,58 @@
+// src/components/AllTheBooks.jsx
+import { useState } from 'react'
+import { Row, Col, Card, ButtonGroup, Button } from 'react-bootstrap'
 
-import { Container, Row, Col, Card } from 'react-bootstrap'
-import books from '../data/fantasy.json'   
+// Load all JSON files in src/data at build time (Vite feature)
+const files = import.meta.glob('../data/*.json', { eager: true })
 
-export default function AllTheBooks() {
+// Normalize to { datasetName: array }
+const DATASETS = Object.fromEntries(
+  Object.entries(files).map(([path, mod]) => {
+    const name = path.split('/').pop().replace('.json', '')
+    return [name, mod.default ?? mod]
+  })
+)
+
+const AVAILABLE = Object.keys(DATASETS)
+const DEFAULT = DATASETS.fantasy ? 'fantasy' : AVAILABLE[0] // prefer fantasy if present
+
+const AllTheBooks = () => {
+  const [active, setActive] = useState(DEFAULT)
+
+  if (!active) {
+    return <p className="text-muted">No book datasets found in <code>src/data</code>.</p>
+  }
+
+  const books = DATASETS[active] ?? []
+
   return (
-    <Container className="mt-4">
-      <Row xs={2} sm={3} md={4} lg={5} className="g-3">
-        {books.map(({ asin, title, img, price }) => (
-          <Col key={asin}>
-            <Card className="h-100">
-              <Card.Img
-                variant="top"
-                src={img}
-                alt={title}
-                loading="lazy"
-              />
+    <>
+      <ButtonGroup className="mb-3">
+        {AVAILABLE.map((name) => (
+          <Button
+            key={name}
+            variant={name === active ? 'primary' : 'outline-primary'}
+            onClick={() => setActive(name)}
+          >
+            {name}
+          </Button>
+        ))}
+      </ButtonGroup>
+
+      <Row className="g-2">
+        {books.map((book) => (
+          <Col xs={12} md={4} key={book.asin}>
+            <Card className="book-cover d-flex flex-column">
+              <Card.Img variant="top" src={book.img} alt={book.title} />
               <Card.Body>
-                <Card.Title className="fs-6">{title}</Card.Title>
-                {typeof price === 'number' && (
-                  <Card.Text className="mb-0 text-muted">€ {price.toFixed(2)}</Card.Text>
-                )}
+                <Card.Title>{book.title}</Card.Title>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-    </Container>
+    </>
   )
 }
+
+export default AllTheBooks

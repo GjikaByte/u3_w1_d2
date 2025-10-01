@@ -1,11 +1,9 @@
-import { Container } from 'react-bootstrap';
+const MyFooter = () => (
+  <footer className="d-flex bg-dark mt-2">
+    <span className="text-white m-auto p-2">
+      <strong>EPICODE</strong> - Copyright {new Date().getFullYear()}
+    </span>
+  </footer>
+)
 
-export default function MyFooter() {
-  return (
-    <footer className="bg-dark text-light mt-5 py-3">
-      <Container className="text-center">
-        <small>&copy; {new Date().getFullYear()} My Book Shop · All rights reserved.</small>
-      </Container>
-    </footer>
-  );
-}
+export default MyFooter

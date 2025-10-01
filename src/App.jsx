@@ -1,17 +1,19 @@
-import MyNav from './components/MyNav.jsx'
-import Welcome from './components/Welcome.jsx'
-import AllTheBooks from './components/AllTheBooks.jsx'
-import MyFooter from './components/MyFooter.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
+import MyNav from './components/MyNav'
+import MyFooter from './components/MyFooter'
+import Welcome from './components/Welcome'
+import AllTheBooks from './components/AllTheBooks'
+import { Container } from 'react-bootstrap'
 
 function App() {
-
   return (
     <>
       <MyNav />
-      <main className="container">
+      <Container>
         <Welcome />
         <AllTheBooks />
-      </main>
+      </Container>
       <MyFooter />
     </>
   )
