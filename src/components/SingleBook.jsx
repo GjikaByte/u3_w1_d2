@@ -2,13 +2,10 @@ import { Component } from 'react';
 import { Card } from 'react-bootstrap';
 
 export default class SingleBook extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { selected: false }; // booleano richiesto
-  }
+  state = { selected: false };
 
   handleToggle = () => {
-    this.setState((prev) => ({ selected: !prev.selected }));
+    this.setState(prev => ({ selected: !prev.selected }));
   };
 
   render() {
